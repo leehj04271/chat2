@@ -15,6 +15,9 @@ export const authOptions = {
         }),
         // ...add more providers here
     ],
+    session: {
+    strategy: "jwt",
+  },
 
     callbacks: {
         async signIn({ account, profile }) {
