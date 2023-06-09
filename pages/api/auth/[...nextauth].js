@@ -33,6 +33,8 @@ export const authOptions = {
             session.accessToken = token.accessToken;
             session.user.id = token.id;
             session.user.nickname = "nicknamee";
+            
+              console.log(user, 'hi')
 
             const client = await getClient();
 
