@@ -16,7 +16,7 @@ export const authOptions = {
     ],
 
     callbacks: {
-        async signIn({user}) {
+   /*      async signIn({user}) {
             const client = await getClient();
 
             const sogae = client.db("sogae");
@@ -41,7 +41,7 @@ export const authOptions = {
             }
 
             return true;
-        },
+        }, */
 
         async session({session, token, user}) {
             // Send properties to the client, like an access_token and user id from a provider.
@@ -68,6 +68,6 @@ export const authOptions = {
             return session
         }
     },
-  
+    secret: process.env.NEXTAUTH_SECRET,
 };
 export default NextAuth(authOptions);
