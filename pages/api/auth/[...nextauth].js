@@ -36,22 +36,7 @@ export const authOptions = {
             
               console.log(user, 'hi')
 
-            const client = await getClient();
-
-            const sogae = client.db("sogae");
-
-            const usersCollection = sogae.collection("users");
-
-
-            const existingUser = await usersCollection.findOne({
-                email: session.user.email,
-            });
-            await client.close();
-
-          
-            console.log(existingUser, 'hi')
-
-            session.user.profile = existingUser.profile;
+      
 
             return session;
         },
