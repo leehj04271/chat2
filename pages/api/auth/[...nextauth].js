@@ -34,23 +34,8 @@ export const authOptions = {
               
                 session.accessToken = token.accessToken
             session.user.id = token.id
-            session.user.nickname = 'nicknamee'
+            session.user.profile = 'nicknamee'
 
-            const client = await getClient();
-
-            const sogae = client.db("sogae");
-
-            const usersCollection = sogae.collection("users");
-
-            console.log(session.user.email)
-            const existingUser = await usersCollection.findOne({
-                                                                   email: session.user.email,
-                                                               });
-            await  client.close();
-
-            console.log(existingUser)
-
-            session.user.profile = existingUser.profile
 
             return session
         }
