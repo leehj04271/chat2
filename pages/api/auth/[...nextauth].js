@@ -46,7 +46,7 @@ export const authOptions = {
             });
             await client.close();
 
-            console.log(existingUser);
+            console.log(existingUse, 'hiiiiiir);
 
             session.user.profile = existingUser.profile;
 
