@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    background-color: #eee;
+    justify-content: space-between;
+    padding : 20px;
+    font-size: 18px;
+}
+
+.header a {
+    all : unset;
+}
+
+.btns {
+    flex-grow: 1;
+    text-align: right;
+    background-color: red;
+}

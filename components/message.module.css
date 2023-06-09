@@ -1,0 +1,32 @@
+.sent {
+direction: rtl;
+}
+
+.received {
+
+}
+
+.sent p {
+    padding: 15px;
+    border-radius: 10px;
+    text-align: right;
+    background-color : aquamarine;
+    max-width: 70%;
+    text-wrap: normal;
+    height: fit-content;
+    overflow-wrap: anywhere;
+}
+
+.received p {
+    padding: 15px;
+    background-color: skyblue;
+
+    border-radius: 10px;
+    max-width: 70%;
+    overflow-wrap: anywhere;
+}
+
+.sent span .received span{
+    width: 100%;
+    overflow-wrap: anywhere;
+}
