@@ -14,10 +14,7 @@ export const authOptions = {
                        }),
         // ...add more providers here
     ],
-     pages: {
-    signIn: "/auth/signin",
-  },
-
+ 
         callbacks: {
             
                async signIn({ user }) {
@@ -49,7 +46,7 @@ export const authOptions = {
             if (url.startsWith("/")) return `${baseUrl}${url}`;
             // Allows callback URLs on the same origin
             else if (new URL(url).origin === baseUrl) return url;
-            return baseUrl;
+            return 'https://chat2-beta.vercel.app/';
         },
      
 
