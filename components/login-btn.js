@@ -14,7 +14,7 @@ export default function LOGIN() {
     }
     return (
         <div style={{textAlign:"right", flexGrow : 1}}>
-            <button className={classes.btn} onClick={() => signIn()}>Sign in</button>
+                        <button className={classes.btn} onClick={() => signIn('google', { callbackUrl: 'https://chat2-beta.vercel.app' })}>Sign in</button>
         </div>
     )
 }
