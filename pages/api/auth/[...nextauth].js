@@ -19,6 +19,38 @@ export const authOptions = {
   },
 
         callbacks: {
+            
+               async signIn({ user }) {
+            const client = await getClient();
+
+            const sogae = client.db("sogae");
+
+            const usersCollection = sogae.collection("users");
+
+            const existingUser = await usersCollection.findOne({
+                email: user.email,
+            });
+
+            if (!existingUser) {
+                await sogae
+                    .collection("users")
+                    .insertOne({ email: user.email });
+                await client.close();
+            } else {
+                await client.close();
+                //return '/signup'
+            }
+
+            return true;
+        },
+
+        async redirect({ url, baseUrl }) {
+            // Allows relative callback URLs
+            if (url.startsWith("/")) return `${baseUrl}${url}`;
+            // Allows callback URLs on the same origin
+            else if (new URL(url).origin === baseUrl) return url;
+            return baseUrl;
+        },
      
 
         async session({ session, token, user }) {
