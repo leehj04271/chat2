@@ -15,31 +15,43 @@ export const authOptions = {
         }),
         // ...add more providers here
     ],
+
     session: {
-    strategy: "jwt",
-  },
+        strategy: "jwt",
+    },
 
     callbacks: {
         async signIn({ account, profile }) {
             if (account.provider === "google") {
-              return profile.email_verified 
+                return profile.email_verified;
             }
-            return true // Do different verification for other providers that don't have `email_verified`
-          },
-        
-        
-          async session({session, token, user}) {
+            return true; // Do different verification for other providers that don't have `email_verified`
+        },
+
+        async session({ session, token, user }) {
             // Send properties to the client, like an access_token and user id from a provider.
-   
-               console.log(session.user.email);
-              
-                session.accessToken = token.accessToken
-            session.user.id = token.id
-            session.user.profile = 'nicknamee'
+            session.accessToken = token.accessToken;
+            session.user.id = token.id;
+            session.user.nickname = "nicknamee";
+
+            const client = await getClient();
+
+            const sogae = client.db("sogae");
+
+            const usersCollection = sogae.collection("users");
 
 
-            return session
-        }
+            const existingUser = await usersCollection.findOne({
+                email: session.user.email,
+            });
+            await client.close();
+
+            console.log(existingUser);
+
+            session.user.profile = existingUser.profile;
+
+            return session;
+        },
     },
     secret: process.env.NEXTAUTH_SECRET,
 };
