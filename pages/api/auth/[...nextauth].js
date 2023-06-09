@@ -15,38 +15,15 @@ export const authOptions = {
         // ...add more providers here
     ],
  
-        callbacks: {
-            
-               async signIn({ user }) {
-            const client = await getClient();
-
-            const sogae = client.db("sogae");
-
-            const usersCollection = sogae.collection("users");
-
-            const existingUser = await usersCollection.findOne({
-                email: user.email,
-            });
-
-            if (!existingUser) {
-                await sogae
-                    .collection("users")
-                    .insertOne({ email: user.email });
-                await client.close();
-            } else {
-                await client.close();
-                //return '/signup'
-            }
-
-            return true;
-        },
-
-        async redirect({ url, baseUrl }) {
-            // Allows relative callback URLs
-        
-            return process.env. NEXTAUTH_URL;
-        },
-     
+      callbacks: {
+    async signIn({ account, profile }) {
+      if (account.provider === "google") {
+        return profile.email_verified && profile.email.endsWith("@example.com")
+      }
+      return true // Do different verification for other providers that don't have `email_verified`
+    },
+  }
+    
 
       
     },
