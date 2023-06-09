@@ -14,7 +14,10 @@ export const authOptions = {
                        }),
         // ...add more providers here
     ],
-    
+     pages: {
+    signIn: "/auth/signin",
+  },
+
         callbacks: {
      
 
@@ -39,7 +42,7 @@ export const authOptions = {
             console.log(existingUser);
 
             session.user.profile = existingUser.profile;
-
+ session.user.uid = token.sub;
             return session;
         },
     },
