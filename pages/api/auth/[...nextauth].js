@@ -22,21 +22,53 @@ export const authOptions = {
 
     callbacks: {
         async signIn({ account, profile }) {
-            if (account.provider === "google") {
-                return profile.email_verified;
+              const client = await getClient();
+
+            const sogae = client.db("sogae");
+
+            const usersCollection = sogae.collection("users");
+
+            const existingUser = await usersCollection.findOne({
+                                                                   email: user.email,
+                                                               });
+
+            if (!existingUser) {
+                await sogae
+                    .collection("users")
+                    .insertOne({email: user.email});
+                await client.close();
+
+
+            } else {
+                await client.close();
+                //return '/signup'
+
             }
-            return true; // Do different verification for other providers that don't have `email_verified`
+
+            return true;
         },
 
         async session({ session, token, user }) {
-            // Send properties to the client, like an access_token and user id from a provider.
-            session.accessToken = token.accessToken;
+           session.accessToken = token.accessToken;
             session.user.id = token.id;
             session.user.nickname = "nicknamee";
-            
-              console.log(user, 'hi')
 
-      
+            const client = await getClient();
+
+            const sogae = client.db("sogae");
+
+            const usersCollection = sogae.collection("users");
+
+
+            const existingUser = await usersCollection.findOne({
+                email: session.user.email,
+            });
+            await client.close();
+
+
+            console.log(existingUser, 'hi')
+
+            session.user.profile = existingUser.profile;
 
             return session;
         },
