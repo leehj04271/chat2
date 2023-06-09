@@ -46,34 +46,11 @@ export const authOptions = {
             if (url.startsWith("/")) return `${baseUrl}${url}`;
             // Allows callback URLs on the same origin
             else if (new URL(url).origin === baseUrl) return url;
-            return 'https://chat2-beta.vercel.app/';
+            return 'https://chat2-beta.vercel.app';
         },
      
 
-        async session({ session, token, user }) {
-            // Send properties to the client, like an access_token and user id from a provider.
-            session.accessToken = token.accessToken;
-            session.user.id = token.id;
-            session.user.nickname = "nicknamee";
-
-            const client = await getClient();
-
-            const sogae = client.db("sogae");
-
-            const usersCollection = sogae.collection("users");
-
-            console.log(session.user.email);
-            const existingUser = await usersCollection.findOne({
-                email: session.user.email,
-            });
-            await client.close();
-
-            console.log(existingUser);
-
-            session.user.profile = existingUser.profile;
- session.user.uid = token.sub;
-            return session;
-        },
+      
     },
 
 
